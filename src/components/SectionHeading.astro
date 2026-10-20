@@ -1,0 +1,23 @@
+---
+interface Props {
+  title: string;
+  id?: string;
+  eyebrow?: string;
+  description?: string;
+  level?: 'h2' | 'h3';
+  align?: 'left' | 'center';
+  class?: string;
+  headingClass?: string;
+  eyebrowClass?: string;
+  descriptionClass?: string;
+}
+const { title, id, eyebrow, description, level = 'h2', align = 'left', class: className, headingClass, eyebrowClass, descriptionClass } = Astro.props;
+const Heading = level;
+---
+<header class:list={['martlet-section-heading', `martlet-section-heading--${align}`, className]}>
+  {eyebrow && <p class:list={['martlet-eyebrow', eyebrowClass]}>{eyebrow}</p>}
+  <Heading id={id} class={headingClass}>{title}</Heading>
+  {Astro.slots.has('divider') ? <slot name="divider" /> : <div class="martlet-rule" aria-hidden="true" />}
+  {description && <p class={descriptionClass}>{description}</p>}
+  <slot />
+</header>

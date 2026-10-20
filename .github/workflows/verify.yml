@@ -1,0 +1,27 @@
+name: Verify Martlet Astro
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        astro: ['5.18.2', '7.3.2']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: martlettheme/npm
+          ref: ade0d4a16bea7e43f15e8ec029cca8def378f7f0
+          path: .core
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts && npm run build && npm test
+        working-directory: .core
+      - run: npm test
+      - run: node scripts/smoke.mjs
+        env:
+          MARTLET_CORE_SOURCE: .core
+          MARTLET_ASTRO_VERSION: ${{ matrix.astro }}
