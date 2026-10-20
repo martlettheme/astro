@@ -1,0 +1,8 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+type Props = ({ href: string } & HTMLAttributes<'a'>) | ({ href?: never } & HTMLAttributes<'button'>);
+const { href, class: className, ...attributes } = Astro.props;
+---
+{href !== undefined
+  ? <a href={href} class:list={['martlet-button', className]} {...attributes}><slot /></a>
+  : <button type="button" class:list={['martlet-button', className]} {...attributes}><slot /></button>}
