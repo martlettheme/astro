@@ -1,0 +1,9 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { choice, type Space, type Tag } from '../options';
+interface Props extends HTMLAttributes<'div'> { as?: Tag; space?: Space; }
+const { as: Tag = 'div', space = 'regular', class: className, ...attributes } = Astro.props;
+choice(space,['small','regular','large'],'space');
+choice(Tag,['div','section','article','nav','ul','ol'],'as');
+---
+<Tag class:list={['martlet-stack',`martlet-space-${space}`,className]} {...attributes}><slot /></Tag>

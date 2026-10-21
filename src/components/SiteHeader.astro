@@ -1,0 +1,12 @@
+---
+import Container from './Container.astro';
+import Cluster from './Cluster.astro';
+interface Link { href: string; label: string; current?: boolean; }
+interface Props { name: string; home?: string; links?: Link[]; navigationLabel?: string; class?: string; }
+const { name, home = '/', links = [], navigationLabel = 'Primary navigation', class: className } = Astro.props;
+---
+<header class:list={['martlet-site-header',className]}><Container><div class="martlet-site-header__inner">
+  <a class="martlet-site-header__brand" href={home}><slot name="brand">{name}</slot></a>
+  {Astro.slots.has('navigation') ? <slot name="navigation" /> : links.length > 0 && <nav aria-label={navigationLabel}><Cluster as="ul" space="small">{links.map(link=><li><a href={link.href} aria-current={link.current ? 'page' : undefined}>{link.label}</a></li>)}</Cluster></nav>}
+  <slot name="actions" />
+</div></Container></header>

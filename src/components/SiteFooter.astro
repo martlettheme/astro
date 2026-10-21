@@ -1,0 +1,11 @@
+---
+import Container from './Container.astro';
+import Stack from './Stack.astro';
+import Cluster from './Cluster.astro';
+interface Props { links?: {href: string; label: string}[]; navigationLabel?: string; class?: string; }
+const { links = [], navigationLabel = 'Footer navigation', class: className } = Astro.props;
+---
+<footer class:list={['martlet-site-footer',className]}><Container><Stack>
+  <slot />
+  {links.length > 0 && <nav aria-label={navigationLabel}><Cluster as="ul" space="small">{links.map(link=><li><a href={link.href}>{link.label}</a></li>)}</Cluster></nav>}
+</Stack></Container></footer>

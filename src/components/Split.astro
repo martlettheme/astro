@@ -1,0 +1,10 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { choice, type Space } from '../options';
+interface Props extends HTMLAttributes<'div'> { space?: Space; ratio?: 'equal' | 'wide-start' | 'wide-end'; align?: 'center' | 'start'; }
+const { space = 'regular', ratio = 'wide-start', align = 'center', class: className, ...attributes } = Astro.props;
+choice(space,['small','regular','large'],'space');choice(ratio,['equal','wide-start','wide-end'],'ratio');choice(align,['center','start'],'align');
+---
+<div class:list={['martlet-split',`martlet-space-${space}`,`martlet-split--${ratio}`,`martlet-split--${align}`,className]} {...attributes}>
+  <div><slot /></div><div><slot name="secondary" /></div>
+</div>

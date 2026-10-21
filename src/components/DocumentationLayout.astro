@@ -1,0 +1,18 @@
+---
+import Layout from './Layout.astro';
+import Container from './Container.astro';
+import PageHeader from './PageHeader.astro';
+import Sidebar from './Sidebar.astro';
+interface Props { title: string; documentTitle?: string; description?: string; summary?: string; eyebrow?: string; mode?: 'light' | 'dark'; lang?: string; mainId?: string; class?: string; bodyClass?: string; sidebarLabel?: string; }
+const { title, documentTitle = title, description, summary, eyebrow, mode = 'light', lang = 'en', mainId = 'main-content', class: className, bodyClass, sidebarLabel = 'Supporting information' } = Astro.props;
+---
+<Layout title={documentTitle} description={description} mode={mode} lang={lang} mainId={mainId} mainTabindex={-1} class={className} bodyClass={bodyClass}>
+  <slot name="head" slot="head" />
+  <slot name="header" slot="header" />
+  <slot name="footer" slot="footer" />
+  <slot name="body-end" slot="body-end" />
+  <PageHeader title={title} summary={summary} eyebrow={eyebrow}><slot name="metadata" /></PageHeader>
+  <div class="martlet-page-body"><Container width={Astro.slots.has('navigation') ? 'content' : 'reading'}>
+    {Astro.slots.has('navigation') ? <Sidebar side="start" sidebarLabel={sidebarLabel}><Fragment slot="sidebar"><slot name="navigation" /></Fragment><article class="martlet-prose"><slot /></article></Sidebar> : <article class="martlet-prose"><slot /></article>}
+  </Container></div>
+</Layout>
