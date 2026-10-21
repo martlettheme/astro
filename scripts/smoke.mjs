@@ -28,5 +28,18 @@ try {
   for(const family of ['Cambo','Lato','Cinzel','IBM Plex Mono'])assert.ok(css.includes(family),family);
   assert.ok(files.some(x=>x.endsWith('.woff2')),'Local fonts are emitted by the consuming build');
   assert.doesNotMatch(css,/fonts\.googleapis\.com|fonts\.gstatic\.com|Space Grotesk|DM Sans/);
+  for (const route of ['article','documentation','layouts']) {
+    const page=await readFile(join(site,'dist',route,'index.html'),'utf8');
+    assert.equal((page.match(/<main\b/g)||[]).length,1,route+' should have one main landmark');
+    assert.equal((page.match(/<h1\b/g)||[]).length,1,route+' should have one page h1');
+    assert.match(page,/martlet-site-header/);assert.match(page,/martlet-site-footer/);
+  }
+  const article=await readFile(join(site,'dist/article/index.html'),'utf8');
+  assert.match(article,/name="example-head" content="forwarded"/);
+  assert.match(article,/id="body-end-example"/);
+  assert.ok(article.indexOf('martlet-sidebar__main')<article.indexOf('martlet-sidebar__aside'));
+  const guide=await readFile(join(site,'dist/documentation/index.html'),'utf8');
+  assert.ok(guide.indexOf('martlet-sidebar__aside')<guide.indexOf('martlet-sidebar__main'));
+  if(process.env.MARTLET_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit'});
   console.log('Packed starter build passed: both modes, all font roles, local font assets, and native button behavior.');
-} finally { await rm(temp,{recursive:true,force:true}); }
+} finally { if (!process.env.MARTLET_KEEP_FIXTURE) await rm(temp,{recursive:true,force:true}); }

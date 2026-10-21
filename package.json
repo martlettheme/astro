@@ -1,10 +1,16 @@
 {
   "name": "@martlet/astro",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Reusable Astro layouts and components for the Martlet design system",
   "type": "module",
   "license": "MIT",
-  "files": ["src", "starter", "docs", "README.md", "LICENSE"],
+  "files": [
+    "src",
+    "starter",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./Layout.astro": "./src/components/Layout.astro",
@@ -13,19 +19,48 @@
     "./Card.astro": "./src/components/Card.astro",
     "./Button.astro": "./src/components/Button.astro",
     "./styles.css": "./src/styles.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./Stack.astro": "./src/components/Stack.astro",
+    "./Cluster.astro": "./src/components/Cluster.astro",
+    "./Grid.astro": "./src/components/Grid.astro",
+    "./Sidebar.astro": "./src/components/Sidebar.astro",
+    "./Split.astro": "./src/components/Split.astro",
+    "./Section.astro": "./src/components/Section.astro",
+    "./PageHeader.astro": "./src/components/PageHeader.astro",
+    "./SiteHeader.astro": "./src/components/SiteHeader.astro",
+    "./SiteFooter.astro": "./src/components/SiteFooter.astro",
+    "./ArticleLayout.astro": "./src/components/ArticleLayout.astro",
+    "./LandingLayout.astro": "./src/components/LandingLayout.astro",
+    "./DocumentationLayout.astro": "./src/components/DocumentationLayout.astro"
   },
-  "sideEffects": ["**/*.css", "**/*.astro"],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.astro"
+  ],
   "peerDependencies": {
-    "@martlet/theme": "^2.0.0",
+    "@martlet/theme": "^2.1.0",
     "astro": "^5.14.0 || ^6.0.0 || ^7.0.0"
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "prepack": "npm test"
   },
-  "publishConfig": { "access": "public" },
-  "repository": { "type": "git", "url": "git+https://github.com/martlettheme/astro.git" },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martlettheme/astro.git"
+  },
   "homepage": "https://martlettheme.dev/",
-  "keywords": ["astro", "astro-component", "martlet", "theme", "design-system"]
+  "keywords": [
+    "astro",
+    "astro-component",
+    "martlet",
+    "theme",
+    "design-system"
+  ],
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
 }

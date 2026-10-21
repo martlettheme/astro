@@ -1,22 +1,14 @@
 ---
-import { Layout, Container, SectionHeading, Card, Button } from '@martlet/astro';
+import { LandingLayout, SiteHeader, SiteFooter, Section, Grid, Stack, Card, Button, Split, SectionHeading } from '@martlet/astro';
+const links=[{href:'/',label:'Home',current:true},{href:'/article/',label:'Article'},{href:'/documentation/',label:'Documentation'},{href:'/layouts/',label:'Layout lab'}];
 ---
-<Layout title="Your Martlet website" description="A starting point for your own content.">
-  <Container>
-    <h1>Your website starts here.</h1>
-    <p>Replace this example with your own words and identity.</p>
-    <SectionHeading title="Built on shared foundations" eyebrow="Martlet" />
-    <Card>
-      <h3>Make it yours</h3>
-      <p>Serif prose, sans serif controls, and monospace code each have their own role.</p>
-      <pre><code>npm run dev</code></pre>
-      <Button href="#example">Explore the example</Button>
-    </Card>
-    <section id="example" class="martlet-section">
-      <h2>Forms and tables</h2>
-      <label for="name">Name</label><input id="name" name="name" autocomplete="name" />
-      <Button disabled>Disabled example</Button>
-      <div data-martlet="dark" class="martlet martlet-card"><h3>Dark appearance</h3><p>Both modes can coexist.</p><Button href="#">A dark-mode link</Button></div>
-    </section>
-  </Container>
-</Layout>
+<LandingLayout title="Your work, clearly presented." summary="A neutral starting point for a publication, organization, or personal project." eyebrow="A place to begin">
+  <SiteHeader slot="header" name="Your website" links={links} />
+  <Section aria-labelledby="examples"><Stack><SectionHeading title="Choose a composition" id="examples" /><Grid columns={3}>
+    <Card><h3>An article</h3><p>Readable prose with optional supporting material.</p><Button href="/article/">Read the article</Button></Card>
+    <Card><h3>Documentation</h3><p>A guide with navigation before its reading column.</p><Button href="/documentation/">Open the guide</Button></Card>
+    <Card><h3>Structural layouts</h3><p>Responsive arrangements that work within their available space.</p><Button href="/layouts/">Explore layouts</Button></Card>
+  </Grid></Stack></Section>
+  <Section mode="dark" aria-labelledby="appearance"><Split><div><h2 id="appearance">Dark appearance</h2><p>Both modes can coexist. Font roles and structural defaults come from the same core.</p></div><Card slot="secondary"><h3>Native controls</h3><label for="example-name">Name</label><input id="example-name" name="name" autocomplete="name" /><Button disabled>Disabled example</Button></Card></Split></Section>
+  <SiteFooter slot="footer" links={links}><p>Replace this example with your own words and identity.</p></SiteFooter>
+</LandingLayout>

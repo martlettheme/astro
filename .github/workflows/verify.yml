@@ -13,15 +13,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: martlettheme/npm
-          ref: ade0d4a16bea7e43f15e8ec029cca8def378f7f0
+          ref: d0c8dfa93d8c9b7c7e665f54d62e06d533704572
           path: .core
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
       - run: npm ci --ignore-scripts && npm run build && npm test
         working-directory: .core
+      - run: npm ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
       - run: npm test
+      - run: npx playwright install --with-deps chromium
       - run: node scripts/smoke.mjs
         env:
           MARTLET_CORE_SOURCE: .core
           MARTLET_ASTRO_VERSION: ${{ matrix.astro }}
+          MARTLET_BROWSER: 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: layout-qa-${{ matrix.astro }}
+          path: artifacts/qa/
+          if-no-files-found: ignore

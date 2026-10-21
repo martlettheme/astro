@@ -1,0 +1,9 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Container from './Container.astro';
+import { choice } from '../options';
+interface Props extends HTMLAttributes<'section'> { width?: 'content' | 'reading' | 'archive'; mode?: 'light' | 'dark'; }
+const { width = 'content', mode, class: className, ...attributes } = Astro.props;
+choice(width,['content','reading','archive'],'width');if(mode !== undefined)choice(mode,['light','dark'],'mode');
+---
+<section data-martlet={mode} class:list={['martlet','martlet-band',className]} {...attributes}><Container width={width}><slot /></Container></section>

@@ -1,0 +1,14 @@
+---
+import Layout from './Layout.astro';
+import PageHeader from './PageHeader.astro';
+interface Props { title: string; documentTitle?: string; description?: string; summary?: string; eyebrow?: string; mode?: 'light' | 'dark'; lang?: string; mainId?: string; class?: string; bodyClass?: string; sidebarLabel?: string; }
+const { title, documentTitle = title, description, summary, eyebrow, mode = 'light', lang = 'en', mainId = 'main-content', class: className, bodyClass, sidebarLabel = 'Supporting information' } = Astro.props;
+---
+<Layout title={documentTitle} description={description} mode={mode} lang={lang} mainId={mainId} class={className} bodyClass={bodyClass}>
+  <slot name="head" slot="head" />
+  <slot name="header" slot="header" />
+  <slot name="footer" slot="footer" />
+  <slot name="body-end" slot="body-end" />
+  {Astro.slots.has('hero') ? <slot name="hero" /> : <PageHeader title={title} summary={summary} eyebrow={eyebrow}><slot name="metadata" /></PageHeader>}
+  <slot />
+</Layout>

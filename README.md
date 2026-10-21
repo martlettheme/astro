@@ -4,13 +4,11 @@
 
 ## Install
 
-Registry publication is pending. Pack both repositories, then install both archives together:
-
 ```sh
-npm install ./martlet-theme-2.0.0.tgz ./martlet-astro-1.0.0.tgz
+npm install @martlet/theme @martlet/astro
 ```
 
-After registry publication, use `npm install @martlet/theme @martlet/astro`. The GitHub organization is `martlettheme`; the npm scope is `martlet`.
+The GitHub organization is `martlettheme`; the npm scope is `martlet`.
 
 ## Use
 
@@ -35,8 +33,12 @@ Components also have direct exports such as `@martlet/astro/Container.astro`. Fo
 
 ## Starter
 
-Copy `starter/` to a new project. Until registry publication, install the two local archives before building. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
+Copy `starter/` to a new project. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
 
 ## Compatibility and maintenance
 
 Astro 5–7 is the supported peer range. Both current consumers exercise the package (Astro 5.18.2 and 7.3.2). See [the extraction and migration playbook](docs/playbook.md) for release ordering, provenance, and validation. Publish only after both consuming sites pass their checks; CI never publishes automatically.
+
+## Layout system
+
+Version 1.1 adds `Stack`, `Cluster`, `Grid`, `Sidebar`, `Split`, `Section`, `PageHeader`, `SiteHeader`, `SiteFooter`, `ArticleLayout`, `LandingLayout`, and `DocumentationLayout`. These consume `@martlet/theme@^2.1.0`; visual defaults and structural CSS live in the core. See [layout contracts, source observations, and examples](docs/layouts.md). Existing components and Layout behavior remain available.

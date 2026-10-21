@@ -1,0 +1,11 @@
+---
+import Container from './Container.astro';
+import Split from './Split.astro';
+interface Props { title: string; summary?: string; eyebrow?: string; class?: string; }
+const { title, summary, eyebrow, class: className } = Astro.props;
+---
+<header class:list={['martlet-page-header',className]}>
+  <Container>
+    {Astro.slots.has('media') ? <Split><div class="martlet-page-header__copy">{eyebrow && <p class="martlet-eyebrow">{eyebrow}</p>}<h1>{title}</h1>{summary && <p class="martlet-page-header__summary">{summary}</p>}<div class="martlet-page-header__metadata"><slot /></div></div><div slot="secondary" class="martlet-page-header__media"><slot name="media" /></div></Split> : <div class="martlet-page-header__copy">{eyebrow && <p class="martlet-eyebrow">{eyebrow}</p>}<h1>{title}</h1>{summary && <p class="martlet-page-header__summary">{summary}</p>}<div class="martlet-page-header__metadata"><slot /></div></div>}
+  </Container>
+</header>
