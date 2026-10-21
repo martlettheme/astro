@@ -11,7 +11,7 @@ const server=createServer(async(req,res)=>{
 });
 await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const base=`http://127.0.0.1:${server.address().port}`;
-const browser=await chromium.launch({args:['--no-sandbox','--disable-dev-shm-usage']});
+const browser=await chromium.launch({... (process.env.PLAYWRIGHT_EXECUTABLE_PATH ? {executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage']});
 const context=await browser.newContext({javaScriptEnabled:false});
 const external=[];await context.route('**/*',route=>{if(route.request().url().startsWith(base+'/'))return route.continue();external.push(route.request().url());return route.abort();});
 const page=await context.newPage();
@@ -28,8 +28,8 @@ try{
    console.log('Checking '+route+' at '+width);await page.setViewportSize({width,height:1000});await page.goto(base+route);await settledFonts();await fits(route+' at '+width);
    assert.equal(await page.locator('main').count(),1);assert.equal(await page.locator('h1').count(),1);
   }
-  await page.setViewportSize({width:307,height:1000});await page.reload();await page.addStyleTag({content:'html{font-size:150% !important}'});await fits(route+' with 150% text');
-  await page.screenshot({path:`artifacts/qa/${route.replaceAll('/','')||'landing'}-mobile.png`});
+  await page.setViewportSize({width:307,height:1000});await page.reload();await page.evaluate(()=>document.documentElement.style.setProperty('font-size','150%','important'));await fits(route+' with 150% text');
+  console.log('Capturing screenshot');await page.screenshot({timeout:15000,path:`artifacts/qa/${route.replaceAll('/','')||'landing'}-mobile.png`});
  }
  await page.setViewportSize({width:1600,height:1000});await page.goto(base+'/layouts/');
  for(const mode of ['light','dark']){
@@ -40,10 +40,11 @@ try{
   const nested=band.locator('.probe-nested');assert.equal(await nested.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),1,'Nested grid wraps within its container');
   const main=await band.locator('.probe-sidebar > .martlet-sidebar__main').boundingBox(),aside=await band.locator('.probe-sidebar > .martlet-sidebar__aside').boundingBox();assert.ok(Math.abs(main.y-aside.y)<2,'Desktop sidebar is beside main content');
  }
- await page.screenshot({path:'artifacts/qa/layouts-desktop.png',fullPage:true});
+ console.log('Capturing screenshot');await page.screenshot({timeout:15000,path:'artifacts/qa/layouts-desktop.png',fullPage:true});
  await page.setViewportSize({width:307,height:1000});await page.reload();
  const main=await page.locator('.probe-sidebar > .martlet-sidebar__main').first().boundingBox(),aside=await page.locator('.probe-sidebar > .martlet-sidebar__aside').first().boundingBox();assert.ok(aside.y>main.y,'Narrow sidebar follows main content');
  await page.goto(base+'/article/');await page.keyboard.press('Tab');assert.ok(await page.locator('.martlet-skip-link').evaluate(e=>e===document.activeElement));
+ await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement?.id),'main-content','Skip link moves focus into main content');
  await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--martlet-motion-duration').trim()),'0s');
  assert.deepEqual(external,[]);console.log('Layout browser checks passed: 4 routes, 6 widths, enlarged text, both modes, nested grids, source order, skip link, and reduced motion.');
 }finally{clearTimeout(watchdog);await context.close();await browser.close();await new Promise(done=>server.close(done));}
