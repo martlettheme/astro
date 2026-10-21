@@ -27,6 +27,7 @@ try{
  await page.setViewportSize({width:1600,height:1000});await page.goto(base+'/layouts/');
  for(const mode of ['light','dark']){
   const band=page.locator(`.layout-lab[data-martlet="${mode}"]`);
+  assert.equal(await band.locator('.probe-regular-space').evaluate(e=>getComputedStyle(e).gap), await band.locator('.probe-grid').evaluate(e=>getComputedStyle(e).gap), 'Regular nested spacing is independent of a compact parent');
   const grid=band.locator('.probe-grid');assert.equal(await grid.evaluate(e=>getComputedStyle(e).display),'grid');
   const columns=await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);assert.ok(columns>1&&columns<=3,'Bounded desktop columns');
   const nested=band.locator('.probe-nested');assert.equal(await nested.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),1,'Nested grid wraps within its container');
