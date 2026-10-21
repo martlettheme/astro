@@ -15,12 +15,17 @@ const browser=await chromium.launch({args:['--no-sandbox','--disable-dev-shm-usa
 const context=await browser.newContext({javaScriptEnabled:false});
 const external=[];await context.route('**/*',route=>{if(route.request().url().startsWith(base+'/'))return route.continue();external.push(route.request().url());return route.abort();});
 const page=await context.newPage();
+page.on('requestfailed',r=>console.error('Request failed',r.url(),r.failure()));
+async function settledFonts(){
+ for(let n=0;n<60;n++){if(await page.evaluate(()=>{void document.documentElement.offsetHeight;return document.fonts.status === 'loaded';}))return;await new Promise(done=>setTimeout(done,250));}
+ throw new Error('Fonts did not settle: '+JSON.stringify(await page.evaluate(()=>[...document.fonts].map(f=>({family:f.family,weight:f.weight,status:f.status})))));
+}
 async function fits(label){const detail=await page.evaluate(()=>({viewport:innerWidth,document:document.documentElement.scrollWidth,overflow:[...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect();return r.width>0&&(r.right>innerWidth+1||r.left< -1)&&!e.closest('pre,.martlet-scroll')}).slice(0,8).map(e=>({tag:e.tagName,class:e.className,width:e.getBoundingClientRect().width,text:e.textContent?.slice(0,50)}))}));assert.ok(detail.document<=detail.viewport,label+' '+JSON.stringify(detail));}
 try{
  await mkdir('artifacts/qa',{recursive:true});
  for(const route of ['/','/article/','/documentation/','/layouts/']){
   for(const width of [280,307,390,768,1280,1600]){
-   console.log('Checking '+route+' at '+width);await page.setViewportSize({width,height:1000});await page.goto(base+route);await page.waitForFunction(()=>document.fonts.status === 'loaded', undefined, {timeout:15000});await fits(route+' at '+width);
+   console.log('Checking '+route+' at '+width);await page.setViewportSize({width,height:1000});await page.goto(base+route);await settledFonts();await fits(route+' at '+width);
    assert.equal(await page.locator('main').count(),1);assert.equal(await page.locator('h1').count(),1);
   }
   await page.setViewportSize({width:307,height:1000});await page.reload();await page.addStyleTag({content:'html{font-size:150% !important}'});await fits(route+' with 150% text');
