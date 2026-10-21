@@ -5,6 +5,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     strategy:
       matrix:
         astro: ['5.18.2', '7.3.2']

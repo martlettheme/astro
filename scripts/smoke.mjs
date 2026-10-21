@@ -18,8 +18,8 @@ try {
   pkg.dependencies['@martlet/astro']='file:vendor/'+astroArchive;
   if(process.env.MARTLET_ASTRO_VERSION)pkg.dependencies.astro=process.env.MARTLET_ASTRO_VERSION;
   await writeFile(join(site,'package.json'),JSON.stringify(pkg,null,2)+'\n');
-  execFileSync('npm',['install','--ignore-scripts','--no-audit','--no-fund'],{cwd:site,stdio:'inherit'});
-  execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit'});
+  execFileSync('npm',['install','--ignore-scripts','--no-audit','--no-fund'],{cwd:site,stdio:'inherit',timeout:180000});
+  execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000});
   const html=await readFile(join(site,'dist/index.html'),'utf8');
   assert.match(html,/data-martlet="light"/);assert.match(html,/data-martlet="dark"/);
   assert.match(html,/id="main-content"/);assert.match(html,/type="button"[^>]*disabled|disabled[^>]*type="button"/);
@@ -40,6 +40,6 @@ try {
   assert.ok(article.indexOf('martlet-sidebar__main')<article.indexOf('martlet-sidebar__aside'));
   const guide=await readFile(join(site,'dist/documentation/index.html'),'utf8');
   assert.ok(guide.indexOf('martlet-sidebar__aside')<guide.indexOf('martlet-sidebar__main'));
-  if(process.env.MARTLET_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit'});
+  if(process.env.MARTLET_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:210000});
   console.log('Packed starter build passed: both modes, all font roles, local font assets, and native button behavior.');
 } finally { if (!process.env.MARTLET_KEEP_FIXTURE) await rm(temp,{recursive:true,force:true}); }

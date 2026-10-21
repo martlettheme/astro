@@ -4,6 +4,8 @@ import { createServer } from 'node:http';
 import { readFile, mkdir } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 const root=resolve(process.argv[2]);
+const watchdog=setTimeout(()=>{console.error('Layout browser checks exceeded 180 seconds');process.exit(1);},180000);
+console.log('Starting layout browser checks');
 const server=createServer(async(req,res)=>{
   try {const url=new URL(req.url,'http://localhost');const path=resolve(root,'.'+decodeURIComponent(url.pathname)+(url.pathname.endsWith('/')?'index.html':''));if(!path.startsWith(root+sep)){res.writeHead(403).end();return;}const body=await readFile(path);const type={'.html':'text/html','.css':'text/css','.js':'application/javascript','.woff2':'font/woff2'}[extname(path)]||'application/octet-stream';res.writeHead(200,{'Content-Type':type});res.end(body);}catch{res.writeHead(404).end();}
 });
@@ -18,7 +20,7 @@ try{
  await mkdir('artifacts/qa',{recursive:true});
  for(const route of ['/','/article/','/documentation/','/layouts/']){
   for(const width of [280,307,390,768,1280,1600]){
-   await page.setViewportSize({width,height:1000});await page.goto(base+route);await page.evaluate(()=>document.fonts.ready);await fits(route+' at '+width);
+   console.log('Checking '+route+' at '+width);await page.setViewportSize({width,height:1000});await page.goto(base+route);await page.waitForFunction(()=>document.fonts.status === 'loaded', undefined, {timeout:15000});await fits(route+' at '+width);
    assert.equal(await page.locator('main').count(),1);assert.equal(await page.locator('h1').count(),1);
   }
   await page.setViewportSize({width:307,height:1000});await page.reload();await page.addStyleTag({content:'html{font-size:150% !important}'});await fits(route+' with 150% text');
@@ -39,4 +41,4 @@ try{
  await page.goto(base+'/article/');await page.keyboard.press('Tab');assert.ok(await page.locator('.martlet-skip-link').evaluate(e=>e===document.activeElement));
  await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--martlet-motion-duration').trim()),'0s');
  assert.deepEqual(external,[]);console.log('Layout browser checks passed: 4 routes, 6 widths, enlarged text, both modes, nested grids, source order, skip link, and reduced motion.');
-}finally{await context.close();await browser.close();await new Promise(done=>server.close(done));}
+}finally{clearTimeout(watchdog);await context.close();await browser.close();await new Promise(done=>server.close(done));}
