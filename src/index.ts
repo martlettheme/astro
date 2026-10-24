@@ -15,3 +15,5 @@ export { default as SiteFooter } from './components/SiteFooter.astro';
 export { default as ArticleLayout } from './components/ArticleLayout.astro';
 export { default as LandingLayout } from './components/LandingLayout.astro';
 export { default as DocumentationLayout } from './components/DocumentationLayout.astro';
+export { default as TableOfContents } from './components/TableOfContents.astro';
+export type { ContentsItem } from './components/TableOfContents.astro';

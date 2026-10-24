@@ -38,6 +38,13 @@ try {
   assert.match(article,/name="example-head" content="forwarded"/);
   assert.match(article,/id="body-end-example"/);
   assert.ok(article.indexOf('martlet-sidebar__main')<article.indexOf('martlet-sidebar__aside'));
+  assert.match(article,/<nav aria-label="On this page"/);
+  assert.match(article,/<li><a href="#question">[^<]+<\/a><ul><li><a href="#detail">/);
+  assert.ok(article.indexOf('martlet-reading-layout__contents') < article.indexOf('martlet-reading-layout__body'));
+  assert.ok(article.indexOf('martlet-reading-layout__body') < article.indexOf('martlet-sidebar__aside'));
+  assert.match(article,/martlet-site-footer--grouped/);
+  assert.equal((article.match(/class="martlet-site-footer__group"/g)||[]).length,3);
+  assert.ok(article.includes('Your ownership statement.') && article.includes('Your contact destination'));
   const guide=await readFile(join(site,'dist/documentation/index.html'),'utf8');
   assert.ok(guide.indexOf('martlet-sidebar__aside')<guide.indexOf('martlet-sidebar__main'));
   if(process.env.MARTLET_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:210000});

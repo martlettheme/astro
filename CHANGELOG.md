@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — source consolidation
+
+- Add versioned source guidance, optional source roles, and contents/footer pattern support. Existing defaults remain compatible; see docs/consolidation.md.
+
+
 ## 1.1.0
 
 - Add structural primitives, responsive site chrome, and article, landing, and documentation layouts.

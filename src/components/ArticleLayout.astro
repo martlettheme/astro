@@ -12,7 +12,11 @@ const { title, documentTitle = title, description, summary, eyebrow, mode = 'lig
   <slot name="footer" slot="footer" />
   <slot name="body-end" slot="body-end" />
   <PageHeader title={title} summary={summary} eyebrow={eyebrow}><slot name="metadata" /></PageHeader>
-  <div class="martlet-page-body"><Container width={Astro.slots.has('sidebar') ? 'content' : 'reading'}>
+  <div class="martlet-page-body"><Container width={Astro.slots.has('sidebar') || Astro.slots.has('contents') ? 'content' : 'reading'}>
+    <div class="martlet-reading-context"><div class:list={[Astro.slots.has('contents') && 'martlet-reading-layout']}>
+    {Astro.slots.has('contents') && <div class="martlet-reading-layout__contents"><slot name="contents" /></div>}
+    <div class="martlet-reading-layout__body">
     {Astro.slots.has('sidebar') ? <Sidebar side="end" sidebarLabel={sidebarLabel}><Fragment slot="sidebar"><slot name="sidebar" /></Fragment><article class="martlet-prose"><slot /></article></Sidebar> : <article class="martlet-prose"><slot /></article>}
+    </div></div></div>
   </Container></div>
 </Layout>

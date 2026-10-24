@@ -1,6 +1,6 @@
 {
   "name": "@martlet/astro",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Reusable Astro layouts and components for the Martlet design system",
   "type": "module",
   "license": "MIT",
@@ -31,14 +31,15 @@
     "./SiteFooter.astro": "./src/components/SiteFooter.astro",
     "./ArticleLayout.astro": "./src/components/ArticleLayout.astro",
     "./LandingLayout.astro": "./src/components/LandingLayout.astro",
-    "./DocumentationLayout.astro": "./src/components/DocumentationLayout.astro"
+    "./DocumentationLayout.astro": "./src/components/DocumentationLayout.astro",
+    "./TableOfContents.astro": "./src/components/TableOfContents.astro"
   },
   "sideEffects": [
     "**/*.css",
     "**/*.astro"
   ],
   "peerDependencies": {
-    "@martlet/theme": "^2.1.0",
+    "@martlet/theme": "^2.2.0",
     "astro": "^5.14.0 || ^6.0.0 || ^7.0.0"
   },
   "scripts": {

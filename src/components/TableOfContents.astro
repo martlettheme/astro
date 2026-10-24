@@ -1,0 +1,16 @@
+---
+export interface ContentsItem { href: string; label: string; depth?: 2 | 3; }
+interface Props { items: ContentsItem[]; label?: string; variant?: 'index' | 'inline'; class?: string; }
+const {items, label = 'On this page', variant = 'index', class: className} = Astro.props;
+const sections: {item: ContentsItem; children: ContentsItem[]}[] = [];
+for (const item of items) {
+  if (item.depth === 3) {
+    if (!sections.length) throw new Error('A depth-3 contents item requires a preceding depth-2 parent.');
+    sections[sections.length - 1].children.push(item);
+  } else sections.push({item, children: []});
+}
+---
+{sections.length > 0 && <nav aria-label={label} class:list={['martlet-contents',`martlet-contents--${variant}`,className]}>
+  <p class="martlet-contents__label">{label}</p>
+  <ul>{sections.map(({item,children})=><li><a href={item.href}>{item.label}</a>{children.length > 0 && <ul>{children.map(child=><li><a href={child.href}>{child.label}</a></li>)}</ul>}</li>)}</ul>
+</nav>}
