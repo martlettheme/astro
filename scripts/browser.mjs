@@ -46,13 +46,13 @@ try{
  await page.setViewportSize({width:1600,height:1000});await page.goto(base+'/article/');
  const contents=page.getByRole('navigation',{name:'On this page',exact:true});
  await page.screenshot({path:'artifacts/qa/article-desktop.png',fullPage:true});
- await page.locator('.martlet-site-footer--grouped').screenshot({path:'artifacts/qa/footer-desktop.png'});
  assert.equal(await contents.locator('ul ul li').count(),1,'Child section has a native nested list');
  assert.equal(await contents.locator(':scope > ul > li').count(),2,'Two parent sections');
  const index=await contents.boundingBox(),body=await page.locator('.martlet-reading-layout__body').boundingBox();
  assert.ok(index.x < body.x && Math.abs(index.y-body.y)<25,'Wide contents precedes prose in its own column');
  assert.equal(await page.locator('.martlet-site-footer__groups nav').count(),3);
  assert.equal(await page.locator('.martlet-site-footer--grouped').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(7, 17, 31)');
+ await page.locator('.martlet-site-footer--grouped').screenshot({path:'artifacts/qa/footer-desktop.png'});
  await page.setViewportSize({width:320,height:1000});await page.reload();
  const narrowIndex=await contents.boundingBox(),narrowBody=await page.locator('.martlet-reading-layout__body').boundingBox();
  assert.ok(narrowIndex.y < narrowBody.y,'Narrow contents precedes body');await fits('Source profile and grouped footer at 320');
