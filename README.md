@@ -46,3 +46,7 @@ Version 1.1 adds `Stack`, `Cluster`, `Grid`, `Sidebar`, `Split`, `Section`, `Pag
 ## Releases
 
 Stable GitHub releases can publish automatically through npm trusted publishing. See [release setup](docs/releasing.md) for the one-time package authorization and release order.
+
+## Consolidation candidate (unreleased)
+
+Astro 1.2.0 pairs with core ^2.2.0. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
