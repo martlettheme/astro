@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: martlettheme/npm
-          ref: 7ef42fd241b7cb99014b19bccb1aeec10be0ca89
+          ref: 7e083536e0a4943029f3b3c801d65b776cc21552
           path: .core
       - uses: actions/setup-node@v4
         with:
