@@ -23,3 +23,7 @@ SiteFooter defaults to the existing plain rendering. `variant="grouped"` accepts
 Both languages permit top, side and focused frames. Astro SiteHeader remains a wrapping link header; no dropdown, menu controller or React state API is claimed. Martlet uses the audited source header and document-index hierarchy; source index labels use darker existing gold on cream for contrast.
 
 Preserve native semantics, focus visibility, retained input, actionable validation, save retry, draft protection and undo where appropriate. These behavioral obligations cross frameworks; their React implementations do not become Astro props. Full dark mode and new app controls remain extensions. Figure, footnote, maths, archive/card variants and richer data workflows remain gaps.
+
+## Grammar coverage
+
+[Grammar 0.3 support and framework boundaries](grammar-support.md) describes the new form/results contracts and their native HTML versus React availability.
