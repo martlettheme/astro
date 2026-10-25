@@ -1,6 +1,6 @@
 # Martlet consolidation
 
-Core 2.2.0 and Astro 1.2.0 are **experimental release candidates**. Existing theme colors, typography defaults, component defaults, and Astro slots are retained. Do not install an unpublished version from npm. Use the paired review branches or packed archives to evaluate this change.
+Core 2.2.1 and Astro 1.2.1 are **experimental packages distributed under npm’s `next` tag**. Existing theme colors, typography defaults, component defaults, and Astro slots are retained. Use exact registry versions or the `next` dist-tags; verify the registry before installing.
 
 The core owns [grammar](https://github.com/martlettheme/npm/blob/work/foundations-spec/docs/grammar.md), [source decisions](https://github.com/martlettheme/npm/blob/work/foundations-spec/docs/source-decisions.md), [foundation requirements](https://github.com/martlettheme/npm/blob/work/foundations-spec/docs/foundations.md), `language.json`, and framework-independent pattern CSS. Astro owns rendering and slots. React owns its events, controlled state and focus APIs. Documentation and agent references must identify the exact guidance revision. Publication does not establish grammar stability.
 

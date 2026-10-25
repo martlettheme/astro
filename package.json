@@ -1,6 +1,6 @@
 {
   "name": "@martlet/astro",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Reusable Astro layouts and components for the Martlet design system",
   "type": "module",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "**/*.astro"
   ],
   "peerDependencies": {
-    "@martlet/theme": "^2.2.0",
+    "@martlet/theme": "^2.2.1",
     "astro": "^5.14.0 || ^6.0.0 || ^7.0.0"
   },
   "scripts": {
