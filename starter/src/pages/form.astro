@@ -33,7 +33,7 @@ import '@martlet/theme/source-profile.css';
         <label class="martlet-checkbox"><input id="reminder" name="reminder" type="checkbox" /><span>Send a workshop reminder</span></label>
         <div class="martlet-field"><label for="notes">Access requirements (optional)</label><textarea id="notes" name="notes" rows="3"></textarea></div>
       </fieldset>
-      <div class="martlet-actions"><Button type="submit" id="submit">Register</Button><Button type="reset" id="reset" class="martlet-button--secondary">Reset registration</Button><Button id="default-button" class="martlet-button--quiet">Preview only</Button><Button disabled class="martlet-button--secondary" id="disabled-button">Unavailable</Button></div>
+      <div class="martlet-actions"><Button type="submit" id="submit">Register</Button><Button type="reset" id="reset-button" class="martlet-button--secondary">Reset registration</Button><Button id="default-button" class="martlet-button--quiet">Preview only</Button><Button disabled class="martlet-button--secondary" id="disabled-button">Unavailable</Button></div>
       <p id="status" class="martlet-notice" role="status" aria-atomic="true">Not submitted.</p>
     </form>
     <dialog id="discard" class="martlet-dialog" aria-labelledby="discard-title"><form method="dialog"><h2 id="discard-title">Discard this registration?</h2><p>Your unsent entries will be cleared.</p><div class="martlet-actions"><Button type="submit" value="keep" autofocus>Keep editing</Button><Button type="submit" value="discard" class="martlet-button--secondary">Discard entries</Button></div></form></dialog>

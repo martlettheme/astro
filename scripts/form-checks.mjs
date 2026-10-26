@@ -16,7 +16,7 @@ export async function formChecks(browser, base) {
     await page.goto(base + '/form/');
     await page.locator('h1').waitFor(); await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.locator('#submit').evaluate(e=>e.type), 'submit');
-    assert.equal(await page.locator('#reset').evaluate(e=>e.type), 'reset');
+    assert.equal(await page.locator('#reset-button').evaluate(e=>e.type), 'reset');
     assert.equal(await page.locator('#default-button').evaluate(e=>e.type), 'button');
     assert.equal(await page.locator('#summary').isVisible(), false, 'Hidden summary stays hidden');
     assert.equal(await page.locator('#discard').isVisible(), false, 'Closed dialog stays closed');
@@ -26,7 +26,7 @@ export async function formChecks(browser, base) {
       assert.equal(await page.locator('html').getAttribute('data-martlet'), mode);
       const colors = async selector => page.locator(selector).evaluate(e => ({ color:getComputedStyle(e).color, background:getComputedStyle(e).backgroundColor }));
       await page.waitForFunction(()=>{void getComputedStyle(document.querySelector('#submit')).backgroundColor;return document.getAnimations().every(animation=>animation.playState!=='running');});
-      const primary = await colors('#submit'), secondary = await colors('#reset');
+      const primary = await colors('#submit'), secondary = await colors('#reset-button');
       assert.notDeepEqual(primary, secondary, 'Source profile preserves secondary action material');
       assert.notEqual(primary.color, primary.background, 'Primary text and background differ');
       assert.equal((await colors('#anchor-button')).color, primary.color, 'Anchor button retains on-action text');
@@ -61,14 +61,14 @@ export async function formChecks(browser, base) {
     await status('recorded'); await active('submit');
     assert.equal(await page.locator('#summary').isVisible(),false);
     await page.locator('#name').fill('Changed draft');
-    await page.locator('#reset').click();
+    await page.locator('#reset-button').click();
     await page.waitForFunction(()=>document.querySelector('#discard').matches(':modal'));
     assert.equal(await page.evaluate(()=>document.activeElement.textContent.trim()),'Keep editing');
-    await page.keyboard.press('Escape'); await active('reset');
+    await page.keyboard.press('Escape'); await active('reset-button');
     assert.equal(await page.locator('#name').inputValue(),'Changed draft');
-    await page.locator('#reset').click(); await page.locator('#discard button[value="keep"]').click(); await active('reset');
+    await page.locator('#reset-button').click(); await page.locator('#discard button[value="keep"]').click(); await active('reset-button');
     assert.equal(await page.locator('#name').inputValue(),'Changed draft');
-    await page.locator('#reset').click(); await page.locator('#discard button[value="discard"]').click(); await active('reset');
+    await page.locator('#reset-button').click(); await page.locator('#discard button[value="discard"]').click(); await active('reset-button');
     assert.equal(await page.locator('#name').inputValue(),''); assert.equal(await page.locator('#notes').inputValue(),'');
     assert.equal(await page.locator('#summary').isVisible(),false);
     await page.emulateMedia({reducedMotion:'reduce'}); await axe('Reset form with reduced motion');

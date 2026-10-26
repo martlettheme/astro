@@ -5,7 +5,7 @@ const errors = document.querySelector('#summary-errors');
 const retry = document.querySelector('#retry');
 const status = document.querySelector('#status');
 const submit = document.querySelector('#submit');
-const reset = document.querySelector('#reset');
+const reset = document.querySelector('#reset-button');
 const dialog = document.querySelector('#discard');
 let busy = false, dirty = false, attempt = 0, discardConfirmed = false;
 let returnTarget;

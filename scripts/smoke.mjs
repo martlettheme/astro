@@ -24,7 +24,7 @@ try {
   assert.match(html,/data-martlet="light"/);assert.match(html,/data-martlet="dark"/);
   assert.match(html,/id="main-content"/);assert.match(html,/type="button"[^>]*disabled|disabled[^>]*type="button"/);
   const formHtml=await readFile(join(site,'dist/form/index.html'),'utf8');
-  for(const [id,type] of [['submit','submit'],['reset','reset'],['default-button','button']]) {
+  for(const [id,type] of [['submit','submit'],['reset-button','reset'],['default-button','button']]) {
     const tag=formHtml.match(new RegExp('<button\\b[^>]*id="'+id+'"[^>]*>'))?.[0];
     assert.ok(tag,id+' exists'); assert.equal((tag.match(/\btype=/g)||[]).length,1,'Exactly one type attribute for '+id);
     assert.match(tag,new RegExp('type="'+type+'"'));
