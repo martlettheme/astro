@@ -1,6 +1,6 @@
 # Automated npm releases
 
-GitHub Actions publishes stable GitHub releases through npm trusted publishing (OIDC), using `.github/workflows/publish.yml`. It requires no npm token secret.
+GitHub Actions publishes GitHub releases through npm trusted publishing (OIDC), using `.github/workflows/publish.yml`. It requires no npm token secret.
 
 ## One-time npm setup
 
@@ -19,9 +19,9 @@ The workflow must be merged before use. New trusted publisher connections must c
 ## Release
 
 1. Merge reviewed version and changelog changes to `main`.
-2. Publish a stable GitHub release whose tag is exactly `v` plus `package.json`'s version.
+2. Publish a GitHub pre-release for the experimental channel, or a stable release whose tag is exactly `v` plus `package.json`'s version.
 3. The workflow runs the full verification suite, checks tag/version/repository identity and ancestry in `main`, builds from a fresh install, and publishes to npm. Failed checks prevent publication.
 
-Release core 2.1.0 before Astro 1.1.0, then migrate the demonstration sites to registry versions. Prereleases do not publish through this stable-release workflow. Re-running a successful release fails rather than overwriting an existing npm version. Public repositories produce provenance attestations; private repositories publish with provenance disabled because npm does not support those attestations from private source repositories. Repository visibility is unchanged.
+Release core 2.1.0 before Astro 1.1.0, then migrate the demonstration sites to registry versions. The workflow publishes pre-releases to next and stable releases to latest. Verify registry availability before updating consumers. Re-running a successful release fails rather than overwriting an existing npm version. Public repositories produce provenance attestations; private repositories publish with provenance disabled because npm does not support those attestations from private source repositories. Repository visibility is unchanged.
 
 Reference: https://docs.npmjs.com/trusted-publishers/

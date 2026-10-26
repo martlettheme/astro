@@ -5,7 +5,7 @@
 ## Install
 
 ```sh
-npm install @martlet/theme @martlet/astro
+npm install @martlet/theme@2.2.2 @martlet/astro@1.2.2
 ```
 
 The GitHub organization is `martlettheme`; the npm scope is `martlet`.
@@ -33,7 +33,20 @@ Components also have direct exports such as `@martlet/astro/Container.astro`. Fo
 
 ## Starter
 
-Copy `starter/` to a new project. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
+Obtain the shipped starter without a repository checkout:
+
+```sh
+mkdir example && cd example
+npm pack @martlet/astro@1.2.2
+# Extract the downloaded martlet-astro-*.tgz into this directory.
+tar -xzf martlet-astro-1.2.2.tgz
+cp -R package/starter/. .
+rm -rf package
+npm install
+npm run dev
+```
+
+Alternatively copy `node_modules/@martlet/astro/starter/` from an existing installation. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
 
 ## Compatibility and maintenance
 
@@ -49,4 +62,8 @@ Stable GitHub releases can publish automatically through npm trusted publishing.
 
 ## Experimental UI language
 
-Astro 1.2.1 pairs with core ^2.2.0. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
+Astro 1.2.2 pairs with core ^2.2.2. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
+
+## Forms
+
+The starter `/form/` demonstrates native HTML with supported core form classes, explicit submit/reset types, validation, retained input, simulated failure/retry, and a changed-reset dialog. Nothing is sent or stored durably. Core owns the appearance; the small controller is host example code, not a new Astro API. See the core [form styling contract](https://github.com/martlettheme/npm/blob/main/docs/form-styling.md). A `Button` accepts `type="submit"`, `type="reset"`, or its default `type="button"` without duplicate attributes; modifiers use `class="martlet-button--secondary"`.
