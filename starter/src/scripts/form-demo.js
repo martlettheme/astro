@@ -41,7 +41,9 @@ function focusSummary(title) {
 }
 async function register() {
   if (busy) return;
+  const retryStarted = summary.contains(document.activeElement);
   clearErrors();
+  if (retryStarted) submit.focus();
   if (!form.elements.namedItem('name').value.trim()) addError('name', 'Enter your name.');
   if (!form.elements.namedItem('email').value.trim() || !form.elements.namedItem('email').validity.valid) addError('email', 'Enter a valid email address.');
   if (!form.elements.namedItem('attendance').value) addError('attendance-group', 'Choose how you will attend.');
@@ -53,11 +55,9 @@ async function register() {
     retry.hidden = false; status.textContent = 'Registration failed. Your entries are retained.';
     focusSummary('Registration failed. Retry your registration.');
   } else {
-    const returningFromRetry = summary.contains(document.activeElement);
     summary.hidden = true; retry.hidden = true;
     status.textContent = 'Registration recorded for this example. Nothing was sent.';
     dirty = false;
-    if (returningFromRetry) submit.focus();
   }
 }
 form.addEventListener('submit', event => { event.preventDefault(); void register(); });
