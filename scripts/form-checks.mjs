@@ -25,6 +25,7 @@ export async function formChecks(browser, base) {
       if (mode === 'dark') await page.locator('#appearance').click();
       assert.equal(await page.locator('html').getAttribute('data-martlet'), mode);
       const colors = async selector => page.locator(selector).evaluate(e => ({ color:getComputedStyle(e).color, background:getComputedStyle(e).backgroundColor }));
+      await page.waitForFunction(()=>{void getComputedStyle(document.querySelector('#submit')).backgroundColor;return document.getAnimations().every(animation=>animation.playState!=='running');});
       const primary = await colors('#submit'), secondary = await colors('#reset');
       assert.notDeepEqual(primary, secondary, 'Source profile preserves secondary action material');
       assert.notEqual(primary.color, primary.background, 'Primary text and background differ');

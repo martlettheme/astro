@@ -14,7 +14,7 @@ await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const base=`http://127.0.0.1:${server.address().port}`;
 const browserName=process.env.DESIGN_BROWSER ?? 'chromium';
 assert.ok(['chromium','firefox','webkit'].includes(browserName));
-const browser=await ({chromium,firefox,webkit})[browserName].launch({... (browserName==='chromium' && process.env.PLAYWRIGHT_EXECUTABLE_PATH ? {executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage']});
+const browser=await ({chromium,firefox,webkit})[browserName].launch({... (browserName==='chromium' && process.env.PLAYWRIGHT_EXECUTABLE_PATH ? {executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:{}),args:browserName==='chromium'?['--no-sandbox','--disable-dev-shm-usage']:[]});
 const context=await browser.newContext({javaScriptEnabled:false});
 const external=[];await context.route('**/*',route=>{if(route.request().url().startsWith(base+'/'))return route.continue();external.push(route.request().url());return route.abort();});
 const page=await context.newPage();
