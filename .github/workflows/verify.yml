@@ -1,5 +1,9 @@
 name: Verify Martlet Astro
-on: [push, pull_request, workflow_call]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
 permissions:
   contents: read
 concurrency:
@@ -28,6 +32,11 @@ jobs:
         working-directory: .core
       - run: npm ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
       - run: npm test
+      - name: Use the Ubuntu archive for browser dependencies
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' /etc/apt/apt-mirrors.txt
+          fi
       - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: node scripts/smoke.mjs
         env:
