@@ -8,8 +8,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@martlet/theme": "^2.2.1",
-    "@martlet/astro": "^1.2.1",
+    "@martlet/theme": "^2.2.2",
+    "@martlet/astro": "^1.2.2",
     "astro": "^7.3.2"
   }
 }

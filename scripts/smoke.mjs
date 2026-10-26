@@ -23,12 +23,18 @@ try {
   const html=await readFile(join(site,'dist/index.html'),'utf8');
   assert.match(html,/data-martlet="light"/);assert.match(html,/data-martlet="dark"/);
   assert.match(html,/id="main-content"/);assert.match(html,/type="button"[^>]*disabled|disabled[^>]*type="button"/);
+  const formHtml=await readFile(join(site,'dist/form/index.html'),'utf8');
+  for(const [id,type] of [['submit','submit'],['reset','reset'],['default-button','button']]) {
+    const tag=formHtml.match(new RegExp('<button\\b[^>]*id="'+id+'"[^>]*>'))?.[0];
+    assert.ok(tag,id+' exists'); assert.equal((tag.match(/\btype=/g)||[]).length,1,'Exactly one type attribute for '+id);
+    assert.match(tag,new RegExp('type="'+type+'"'));
+  }
   const assets=join(site,'dist/_astro');const files=await readdir(assets);
   const css=(await Promise.all(files.filter(x=>x.endsWith('.css')).map(x=>readFile(join(assets,x),'utf8')))).join('\n');
   for(const family of ['Cambo','Lato','Cinzel','IBM Plex Mono'])assert.ok(css.includes(family),family);
   assert.ok(files.some(x=>x.endsWith('.woff2')),'Local fonts are emitted by the consuming build');
   assert.doesNotMatch(css,/fonts\.googleapis\.com|fonts\.gstatic\.com|Space Grotesk|DM Sans/);
-  for (const route of ['article','documentation','layouts']) {
+  for (const route of ['article','documentation','layouts','form']) {
     const page=await readFile(join(site,'dist',route,'index.html'),'utf8');
     assert.equal((page.match(/<main\b/g)||[]).length,1,route+' should have one main landmark');
     assert.equal((page.match(/<h1\b/g)||[]).length,1,route+' should have one page h1');

@@ -1,6 +1,6 @@
 {
   "name": "@martlet/astro",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Reusable Astro layouts and components for the Martlet design system",
   "type": "module",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "**/*.astro"
   ],
   "peerDependencies": {
-    "@martlet/theme": "^2.2.1",
+    "@martlet/theme": "^2.2.2",
     "astro": "^5.14.0 || ^6.0.0 || ^7.0.0"
   },
   "scripts": {
@@ -53,7 +53,7 @@
     "type": "git",
     "url": "git+https://github.com/martlettheme/astro.git"
   },
-  "homepage": "https://martlettheme.dev/",
+  "homepage": "https://martletdesign.dev/",
   "keywords": [
     "astro",
     "astro-component",
@@ -62,6 +62,7 @@
     "design-system"
   ],
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
     "playwright": "1.64.1"
   }
 }

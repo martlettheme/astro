@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 — adoption repair preview
+
+- Honor native button type without duplicate attributes. Add a complete simulated form starter and rendered regression assertions; document exact starter retrieval. Pair with core ^2.2.2.
+
 ## Unreleased — source consolidation
 
 - Add versioned source guidance, optional source roles, and contents/footer pattern support. Existing defaults remain compatible; see docs/consolidation.md.
