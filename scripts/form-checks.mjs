@@ -68,7 +68,7 @@ export async function formChecks(browser, base) {
     assert.equal(await page.locator('#name').inputValue(),'Changed draft');
     await page.locator('#reset-button').click(); await page.locator('#discard button[value="keep"]').click(); await active('reset-button');
     assert.equal(await page.locator('#name').inputValue(),'Changed draft');
-    await page.locator('#reset-button').click(); await page.locator('#discard button[value="discard"]').click(); await active('reset-button');
+    await page.locator('#reset-button').click(); await page.locator('#discard button[value="discard"]').click(); await page.waitForFunction(()=>document.querySelector('#name').value===''); await active('reset-button');
     assert.equal(await page.locator('#name').inputValue(),''); assert.equal(await page.locator('#notes').inputValue(),'');
     assert.equal(await page.locator('#summary').isVisible(),false);
     await page.emulateMedia({reducedMotion:'reduce'}); await axe('Reset form with reduced motion');
