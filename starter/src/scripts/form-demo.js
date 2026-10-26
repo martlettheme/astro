@@ -47,7 +47,7 @@ async function register() {
   if (!form.elements.namedItem('attendance').value) addError('attendance-group', 'Choose how you will attend.');
   if (errors.children.length) { focusSummary('Check your registration'); return; }
   pending(true); status.textContent = 'Registering…';
-  await new Promise(done => setTimeout(done, 400));
+  await new Promise(done => setTimeout(done, 1000));
   pending(false);
   if (++attempt === 1) {
     retry.hidden = false; status.textContent = 'Registration failed. Your entries are retained.';

@@ -51,7 +51,7 @@ export async function formChecks(browser, base) {
     await page.locator('input[value="studio"]').check(); await page.locator('#reminder').check();
     await page.locator('#submit').click(); await status('Registering');
     assert.equal(await page.locator('#registration').getAttribute('aria-busy'),'true');
-    assert.ok(await page.locator('#details').isDisabled()); await active('submit');
+    assert.equal(await page.locator('#details').evaluate(e=>e.disabled),true); assert.ok(await page.locator('#name').isDisabled()); await active('submit');
     await page.locator('#submit').dispatchEvent('click'); // duplicate activation is ignored by the controller
     await active('summary'); await status('failed');
     assert.equal(await page.locator('#notes').inputValue(),'Keep this access requirement.');
