@@ -5,7 +5,7 @@
 ## Install
 
 ```sh
-npm install @martlet/theme @martlet/astro
+npm install @martlet/theme@2.2.2 @martlet/astro@1.2.2
 ```
 
 The GitHub organization is `martlettheme`; the npm scope is `martlet`.
@@ -37,7 +37,7 @@ Obtain the shipped starter without a repository checkout:
 
 ```sh
 mkdir example && cd example
-npm pack @martlet/astro@next
+npm pack @martlet/astro@1.2.2
 # Extract the downloaded martlet-astro-*.tgz into this directory.
 tar -xzf martlet-astro-1.2.2.tgz
 cp -R package/starter/. .
