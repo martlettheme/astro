@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: martletdesign/core
-          ref: f4c18540e643388c71da2308607cc8f944b32391
+          ref: 4bc45ff0bd1ee2e93ee61917b023f7b45686895f
           path: .core
       - uses: actions/setup-node@v4
         with:
